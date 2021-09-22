@@ -15,6 +15,9 @@ variable "aws_s3_bucket_name" {
   type        = string
   description = "The name of the bucket where certs will be backed up."
 }
+variable "aws_s3_bucket_key" {
+  type        = string
+}
 variable "registration_email" {
   type        = string
   description = "The email address under which the LetsEncrypt certificate will be created."

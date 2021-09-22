@@ -30,6 +30,11 @@ data "aws_iam_policy_document" "ecs_task" {
   }
   statement {
     effect = "Allow"
+    actions   = ["kms:Encrypt", "kms:Decrypt", "kms:GenerateDataKey"]
+    resources = [ var.aws_s3_bucket_key ]
+  }
+  statement {
+    effect = "Allow"
     actions = [
       "route53:GetChange",
       "route53:ListHostedZones",
