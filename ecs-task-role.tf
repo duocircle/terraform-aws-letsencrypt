@@ -48,6 +48,13 @@ data "aws_iam_policy_document" "ecs_task" {
     ]
     resources = ["arn:aws:route53:::hostedzone/${var.hosted_zone_id}"]
   }
+  statement {
+    effect = "Allow"
+    actions = [
+      "sns:Publish",
+    ]
+    resources = [ var.sns_topic_arn ]
+  }
 }
 
 resource "aws_iam_role" "ecs_task" {
