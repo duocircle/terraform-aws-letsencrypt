@@ -22,6 +22,10 @@ resource "aws_ecs_task_definition" "letsencrypt" {
             value = "/${var.environment_name}/"
           },
           {
+            name  = "CERT_BUCKET_KMS_KEY"
+            value = var.aws_s3_bucket_key
+          },
+          {
             name  = "CERT_REGISTRATION_EMAIL"
             value = var.registration_email
           },
