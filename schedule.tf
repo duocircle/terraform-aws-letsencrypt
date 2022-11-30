@@ -61,7 +61,7 @@ resource "aws_iam_role_policy" "schedule_role_policy" {
                 "iam:PassRole"
             ],
             "Resource": [
-                "${aws_iam_role.ecs_task.arn}",
+                "${local.ecs_task_role.arn}",
                 "${aws_iam_role.ecs_execution.arn}"
             ]
         }

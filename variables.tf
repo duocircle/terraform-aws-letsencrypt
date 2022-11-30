@@ -89,3 +89,22 @@ variable "schedule_expression" {
   description = "How often Cloudwatch Events should kick off the renewal task. Recommended to run at least every 30 days."
   default     = "rate(7 days)"
 }
+
+
+
+variable "ecs_task_role" {
+  type        = object({
+    id = string
+    arn = string
+    name = string
+  })
+  description = "If specified, use the given object as ECS task role"
+  default     = {
+    id  = ""
+    arn = ""
+    name = ""
+  }
+}
+locals {
+  ecs_task_role = var.ecs_task_role.id == "" ? aws_iam_role.ecs_task[0] : var.ecs_task_role
+}

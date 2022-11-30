@@ -58,11 +58,13 @@ data "aws_iam_policy_document" "ecs_task" {
 }
 
 resource "aws_iam_role" "ecs_task" {
+  count = var.ecs_task_role.id == "" ? 1 : 0
+
   name               = "fargate-${var.service_name}-task"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_principal.json
 }
 resource "aws_iam_role_policy" "ecs_task" {
   name   = "fargate-${var.service_name}-task"
-  role   = aws_iam_role.ecs_task.id
+  role   = local.ecs_task_role.id
   policy = data.aws_iam_policy_document.ecs_task.json
 }

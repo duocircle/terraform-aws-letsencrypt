@@ -57,7 +57,7 @@ resource "aws_ecs_task_definition" "letsencrypt" {
       }
   ])
   execution_role_arn       = aws_iam_role.ecs_execution.arn
-  task_role_arn            = aws_iam_role.ecs_task.arn
+  task_role_arn            = local.ecs_task_role.arn
   network_mode             = "awsvpc"
   cpu                      = var.container_cpu
   memory                   = var.container_memory
