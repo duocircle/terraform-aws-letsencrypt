@@ -1,0 +1,27 @@
+name: Auto-release
+
+on: 
+ push:
+  tags:
+    - '*'
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install -g auto-changelog
+      - name: Generate Changelog
+        run: auto-changelog -o ${{ github.workspace }}-CHANGELOG.txt -t ${{ github.workspace }}/.github/workflows/autorelease.hbs --commit-limit false --starting-version ${{ github.ref_name }} --breaking-pattern BREAKING
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: ${{ github.workspace }}-CHANGELOG.txt
